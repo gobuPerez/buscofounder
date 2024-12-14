@@ -1,0 +1,66 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+ 
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String  @map("user_id")
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@unique([provider, providerAccountId])
+}
+ 
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  role          Role      @default(USER)
+  accounts      Account[]
+  posts         Post[]
+}
+
+model Post {
+  id            String @id @default(cuid())
+  publicName    String @db.VarChar(64) @unique
+  problem       String? @db.VarChar(2048)
+  vision        String? @db.VarChar(2048)
+  aboutMe       String? @db.VarChar(2048)
+  lookingFor    String? @db.VarChar(2048) @map("looking_for")
+  offer         String? @db.VarChar(2048)
+  team          String? @db.VarChar(2048)
+  location      String? @db.VarChar(2048)
+  projectPhase  String? @db.VarChar(2048) @map("project_phase")
+  linkedin      String? @db.VarChar(2048)
+  instagram     String? @db.VarChar(2048)
+  twitter       String? @db.VarChar(2048)
+  contactEmail  String? @db.VarChar(2048) @map("contact_email") 
+  profilePhoto  String? @db.VarChar(2048) @map("profile_photo")
+  createdAt     DateTime @default(now()) @map("created_at")
+  deleted       Boolean @default(false)
+
+  author   User @relation(fields: [authorId], references: [id])
+  authorId String 
+}

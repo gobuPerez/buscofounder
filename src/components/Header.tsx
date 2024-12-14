@@ -18,9 +18,9 @@ export default async function Header() {
     return (
         <header className="border-b mb-5 py-3 bg-white">
             <div className="container flex justify-between items-center">
-                <div className="text-2xl">
+                <Link className="text-2xl" href="/">
                     <span className="font-bold text-blue-400">bus</span><span className="font-bold text-blue-600">cofounder</span>
-                </div>
+                </Link>
                 {
                     !session ?
                     <Button asChild>

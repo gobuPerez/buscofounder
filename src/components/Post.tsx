@@ -3,6 +3,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
 export default async function Post() {
+/*     https://tailwindui.com/components/application-ui/lists/grid-lists */
     return (
         <section className="border rounded-md p-4 bg-white mb-5 shadow-md">
             <p className="font-bold">El problema que quiero resolver</p>
