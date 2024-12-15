@@ -6,11 +6,11 @@ import {
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import { CircleXIcon } from "lucide-react";
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
     Form,
     FormControl,
@@ -19,54 +19,27 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { createPost } from "@/actions/createPost";
-   
-const formSchema = z.object({
-    publicName: z.string({required_error: "Campo obligatorio.", invalid_type_error: "Por favor, usa solo texto." }).trim()
-        .min(1, { message: "Campo obligatorio." })
-        .max(64, { message: "Este campo debe tener menos de 65 caracteres." }),
-    problem: z.string({ invalid_type_error: "Por favor, utiliza solo texto." }).trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }),
-    vision: z.string({ invalid_type_error: "Por favor, utiliza solo texto." }).trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }),
-    aboutMe: z.string({ invalid_type_error: "Por favor, utiliza solo texto." }).trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }),
-    lookingFor: z.string({ invalid_type_error: "Por favor, utiliza solo texto." }).trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }),
-    offer: z.string({ invalid_type_error: "Por favor, utiliza solo texto." }).trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }),
-    team: z.string({ invalid_type_error: "Por favor, utiliza solo texto." }).trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }),
-    location: z.string({ invalid_type_error: "Por favor, utiliza solo texto." }).trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }), 
-    projectPhase: z.string({ invalid_type_error: "Por favor, utiliza solo texto." }).trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }),
-    linkedin: z.string({ invalid_type_error: "Por favor, utiliza solo texto." }).trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }),
-    instagram: z.string({ invalid_type_error: "Por favor, utiliza solo texto." }).trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }),
-    twitter: z.string({ invalid_type_error: "Por favor, utiliza solo texto." }).trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }),
-    contactEmail: z.string({ invalid_type_error: "Por favor, utiliza solo texto." }).trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }),
-    profilePhoto: z.boolean()
-});
+import { newPostSchema } from "@/zod";
   
 interface Props {
-    setOpenForm:  Dispatch<SetStateAction<boolean>>
+    setOpenForm:  Dispatch<SetStateAction<boolean>>;
+    userId: string;
+    userName: string;
+    photoURL: string;
 }
 
-export default function NewPostForm({ setOpenForm }:Props) {
+export default function NewPostForm({ setOpenForm, userName, userId, photoURL }:Props) {
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof newPostSchema>>({
+        resolver: zodResolver(newPostSchema),
         defaultValues: {
-            publicName: "",
+            publicName: userName,
             problem: "",
             vision: "",
             aboutMe: "",
@@ -79,13 +52,19 @@ export default function NewPostForm({ setOpenForm }:Props) {
             instagram: "",
             twitter: "",
             contactEmail: "",
-            profilePhoto: true,
+            showProfilePhoto: true
         },
     })
  
-    async function onSubmit(values: z.infer<typeof formSchema>) {
-        await createPost();
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof newPostSchema>) {
+        const response = await createPost({ 
+            ...values, 
+            userId, 
+            profilePhoto: values.showProfilePhoto ? photoURL : null 
+        });
+
+        console.log(response)
+        /* console.log({ ...values, userId, photoURL }); */
     }
 
     return (
@@ -130,7 +109,6 @@ export default function NewPostForm({ setOpenForm }:Props) {
                                 </FormDescription>
                                 <FormControl>
                                     <Textarea
-                                        placeholder="He descubierto que..."
                                         className="resize-none"
                                         {...field}
                                     />
@@ -150,7 +128,6 @@ export default function NewPostForm({ setOpenForm }:Props) {
                                 </FormDescription>
                                 <FormControl>
                                     <Textarea
-                                        placeholder="He descubierto que..."
                                         className="resize-none"
                                         {...field}
                                     />
@@ -170,7 +147,6 @@ export default function NewPostForm({ setOpenForm }:Props) {
                                 </FormDescription>
                                 <FormControl>
                                     <Textarea
-                                        placeholder="He descubierto que..."
                                         className="resize-none"
                                         {...field}
                                     />
@@ -191,7 +167,6 @@ export default function NewPostForm({ setOpenForm }:Props) {
                                 </FormDescription>
                                 <FormControl>
                                     <Textarea
-                                        placeholder="He descubierto que..."
                                         className="resize-none"
                                         {...field}
                                     />
@@ -211,7 +186,6 @@ export default function NewPostForm({ setOpenForm }:Props) {
                                 </FormDescription>
                                 <FormControl>
                                     <Textarea
-                                        placeholder="He descubierto que..."
                                         className="resize-none"
                                         {...field}
                                     />
@@ -225,13 +199,12 @@ export default function NewPostForm({ setOpenForm }:Props) {
                             name="team"
                             render={({ field }) => (
                                 <FormItem>
-                                <FormLabel>Equipo (opcional)</FormLabel>
+                                <FormLabel>Equipo actual (opcional)</FormLabel>
                                 <FormDescription>
                                     ¿Quiénes forman parte del proyecto en este momento?
                                 </FormDescription>
                                 <FormControl>
                                     <Textarea
-                                        placeholder="He descubierto que..."
                                         className="resize-none"
                                         {...field}
                                     />
@@ -251,7 +224,6 @@ export default function NewPostForm({ setOpenForm }:Props) {
                                 </FormDescription>
                                 <FormControl>
                                     <Textarea
-                                        placeholder="He descubierto que..."
                                         className="resize-none"
                                         {...field}
                                     />
@@ -271,7 +243,6 @@ export default function NewPostForm({ setOpenForm }:Props) {
                                 </FormDescription>
                                 <FormControl>
                                     <Textarea
-                                        placeholder="He descubierto que..."
                                         className="resize-none"
                                         {...field}
                                     />
@@ -282,7 +253,7 @@ export default function NewPostForm({ setOpenForm }:Props) {
                         />
                         <FormField
                             control={form.control}
-                            name="profilePhoto"
+                            name="showProfilePhoto"
                             render={({ field }) => (
                                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                                 <div className="space-y-0.5">

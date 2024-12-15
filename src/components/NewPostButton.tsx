@@ -3,7 +3,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button"
 import NewPostForm from "./NewPostForm";
 
-export default function NewPostButton() {
+interface Props {
+    userId: string;
+    userName: string;
+    photoURL: string;
+}
+export default function NewPostButton({ userId, userName, photoURL }:Props) {
     
     const [openForm, setOpenForm] = useState<boolean>(false);
 
@@ -15,7 +20,12 @@ export default function NewPostButton() {
                 <Button onClick={ () => setOpenForm(true) }>Nuevo mensaje</Button>
             </div>
             :
-            <NewPostForm setOpenForm={setOpenForm}/>
+            <NewPostForm 
+                setOpenForm={setOpenForm} 
+                userId={userId} 
+                userName={userName} 
+                photoURL={photoURL} 
+            />
         }
         </>
     );

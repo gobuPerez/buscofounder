@@ -21,7 +21,11 @@ export default async function HomePage() {
                         <Button asChild><Link href="/login">Publicar mensaje</Link></Button>
                     </div>
                     :
-                    <NewPostButton />
+                    <NewPostButton 
+                        userId={session.user?.id || "" } 
+                        userName={session.user?.name || "" } 
+                        photoURL={session.user?.image || "" }
+                    />
                 }
                 <Post />
                 <Post />
