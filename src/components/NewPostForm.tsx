@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import {
     Card,
     CardContent,
@@ -7,7 +7,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { CircleXIcon } from "lucide-react";
+import { AlertCircle, CircleXIcon, Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -26,6 +26,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { createPost } from "@/actions/createPost";
 import { newPostSchema } from "@/zod";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Response } from "@/lib/interfaces";
   
 interface Props {
     setOpenForm:  Dispatch<SetStateAction<boolean>>;
@@ -35,6 +37,10 @@ interface Props {
 }
 
 export default function NewPostForm({ setOpenForm, userName, userId, photoURL }:Props) {
+
+    const [response, setResponse] = useState<Response>({ status: "empty", message: "" });
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     const form = useForm<z.infer<typeof newPostSchema>>({
         resolver: zodResolver(newPostSchema),
@@ -57,21 +63,22 @@ export default function NewPostForm({ setOpenForm, userName, userId, photoURL }:
     })
  
     async function onSubmit(values: z.infer<typeof newPostSchema>) {
-        const response = await createPost({ 
+        
+        setLoading(true);
+
+        setResponse(await createPost({ 
             ...values, 
             userId, 
             profilePhoto: values.showProfilePhoto ? photoURL : null 
-        });
+        }));
 
-        console.log(response)
-        /* console.log({ ...values, userId, photoURL }); */
+        setLoading(false);
     }
 
     return (
         <Card className="mb-3">
             <CardHeader>
-                <CardTitle className="flex justify-between items-center">
-                    Nuevo mensaje
+                <CardTitle className="flex justify-end items-center">
                     <CircleXIcon className="size-5 hover:cursor-pointer" onClick={ () => setOpenForm(false) }/>
                 </CardTitle>
                 <CardDescription>
@@ -82,22 +89,7 @@ export default function NewPostForm({ setOpenForm, userName, userId, photoURL }:
             <CardContent>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-                        <FormField
-                            control={form.control}
-                            name="publicName"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Nombre público (obligatorio)</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="shadcn" {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        Este es el nombre que aparecerá en la publicación
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                        <h3 className="text-xl text-center font-bold">Sobre el proyecto</h3>
                         <FormField
                             control={form.control}
                             name="problem"
@@ -125,25 +117,6 @@ export default function NewPostForm({ setOpenForm, userName, userId, photoURL }:
                                 <FormLabel>Visión (opcional)</FormLabel>
                                 <FormDescription>
                                     ¿Cuáles son las metas y aspiraciones del proyecto?
-                                </FormDescription>
-                                <FormControl>
-                                    <Textarea
-                                        className="resize-none"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="aboutMe"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Sobre mí (opcional)</FormLabel>
-                                <FormDescription>
-                                    Experiencia, conocimientos, trayectoria profesional y vital. ¿Por qué trabajar contigo?
                                 </FormDescription>
                                 <FormControl>
                                     <Textarea
@@ -251,6 +224,106 @@ export default function NewPostForm({ setOpenForm, userName, userId, photoURL }:
                                 </FormItem>
                             )}
                         />
+
+                        <h3 className="text-xl text-center font-bold">Sobre ti</h3>
+
+                        <FormField
+                            control={form.control}
+                            name="publicName"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Nombre público (obligatorio)</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="shadcn" {...field} />
+                                    </FormControl>
+                                    <FormDescription>
+                                        Este es el nombre que aparecerá en la publicación
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="aboutMe"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormLabel>Sobre mí (opcional)</FormLabel>
+                                <FormDescription>
+                                    Experiencia, conocimientos, trayectoria profesional y vital. ¿Por qué trabajar contigo?
+                                </FormDescription>
+                                <FormControl>
+                                    <Textarea
+                                        className="resize-none"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="contactEmail"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Email de contacto (opcional)</FormLabel>
+                                    <FormControl>
+                                        <Input type="email" placeholder="tu-nombre@email.com" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="linkedin"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Linkedin (opcional)</FormLabel>
+                                    <FormDescription>
+                                        Enlace a tu perfil de Linkedin
+                                    </FormDescription>
+                                    <FormControl>
+                                        <Input placeholder="https://www.linkedin.com/in/tu-nombre-de-usuario" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="instagram"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Instagram (opcional)</FormLabel>
+                                    <FormDescription>
+                                        Tu nombre de usuario en Instagram
+                                    </FormDescription>
+                                    <FormControl>
+                                        <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="twitter"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>X (opcional)</FormLabel>
+                                    <FormDescription>
+                                        Tu nombre de usuario en X
+                                    </FormDescription>
+                                    <FormControl>
+                                        <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <FormField
                             control={form.control}
                             name="showProfilePhoto"
@@ -272,7 +345,28 @@ export default function NewPostForm({ setOpenForm, userName, userId, photoURL }:
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit" className="w-full">Publicar</Button>
+
+                        {
+                            (!loading && response.status === "error") &&
+                            <Alert variant="destructive">
+                                <AlertCircle className="h-4 w-4" />
+                                <AlertTitle>Error</AlertTitle>
+                                <AlertDescription>
+                                    { response.message }
+                                </AlertDescription>
+                            </Alert>
+                        }
+
+                        <Button type="submit" className="w-full" disabled={loading}>
+                        { 
+                            loading ? 
+                            <>
+                                <Loader2 className="animate-spin" /> Cargando
+                            </>
+                            : 
+                            "Publicar" 
+                        }               
+                        </Button>
                     </form>
                 </Form>
             </CardContent>

@@ -31,7 +31,7 @@ export default async function Header() {
                         <DropdownMenuTrigger>
                         <img
                             alt="Menú"
-                            src={session.user?.image || ""}
+                            src={session.user?.image || undefined}
                             className="inline-block size-8 rounded-full"
                         />
                         </DropdownMenuTrigger>
