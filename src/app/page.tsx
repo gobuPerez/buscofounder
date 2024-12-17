@@ -1,3 +1,4 @@
+import { getPosts } from "@/actions/getPosts";
 import { auth } from "@/auth";
 import CTASection from "@/components/CTASection";
 import Header from "@/components/Header";
@@ -9,6 +10,8 @@ import Link from "next/link";
 export default async function HomePage() {
 
     const session = await auth();
+
+    // await getPosts();
 
     return (
         <>
@@ -27,8 +30,8 @@ export default async function HomePage() {
                         photoURL={session.user?.image || "" }
                     />
                 }
-                <Post />
-                <Post />
+                
+                <Post logged={session?.user ? true : false} />
             </main>
         </>
     );

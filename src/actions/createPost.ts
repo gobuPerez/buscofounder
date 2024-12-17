@@ -1,35 +1,16 @@
 "use server";
-import { Response } from '@/lib/interfaces';
+import { LoginResponse } from '@/lib/interfaces';
 import { db } from '@/prisma';
 import { newPostWhitIdAndPhoto } from '@/zod';
 import { z } from 'zod';
 
-interface Props {
-    publicName: string;
-    problem?: string;
-    vision?: string;
-    aboutMe?: string;
-    lookingFor?: string;
-    offer?: string;
-    team?: string;
-    location?: string;
-    projectPhase?: string;
-    linkedin?: string;
-    instagram?: string;
-    twitter?: string;
-    contactEmail?: string;
-    profilePhoto: boolean;
-    userId: string;
-    photoURL?: string
-}
-
-export const createPost = async (values:z.infer<typeof newPostWhitIdAndPhoto>): Promise<Response> => {
+export const createPost = async (values:z.infer<typeof newPostWhitIdAndPhoto>): Promise<LoginResponse> => {
 
     const { publicName, problem, vision, aboutMe, lookingFor, offer, team, location, 
         projectPhase, linkedin, instagram, twitter, contactEmail, profilePhoto, userId } = values;
 
     if (!problem && !vision && !aboutMe && !lookingFor && !offer && !team && !location && !projectPhase) 
-        return { status: "error", message: "Debes completar al menos uno de los campos sobre el proyecto."}
+        return { status: "error", message: 'Debes completar al menos uno de los campos de la seccción "Sobre el proyecto".'}
 
     const uniqueName = await db.post.findUnique({ 
         where: {
@@ -40,7 +21,7 @@ export const createPost = async (values:z.infer<typeof newPostWhitIdAndPhoto>): 
     if (uniqueName) return { status: "error", message: "Ya existe un usuario con ese nombre. Por favor, utiliza otro. " }
 
     if (!linkedin && !instagram && !twitter && !contactEmail) 
-        return { status: "error", message: "Debes añadir al menos una forma de contacto." }
+        return { status: "error", message: 'Debes añadir al menos una forma de contacto en la sección "Contacto".' }
 
     await db.post.create({
         data: {           

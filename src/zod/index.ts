@@ -36,12 +36,20 @@ export const newPostSchema = z.object({
             .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." })
             .startsWith("https://www.linkedin.com/in/", { message: "Usa un enlace válido de Linkedin, de la forma: https://www.linkedin.com/in/tu-usuario"})
     ]),
-    instagram: z.string({ invalid_type_error: "Por favor, utiliza solo texto." }).
-        trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }),
-    twitter: z.string({ invalid_type_error: "Por favor, utiliza solo texto." })
-        .trim()
-        .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." }),
+    instagram: z.union([
+        z.literal(""),
+        z.string({ invalid_type_error: "Por favor, utiliza solo texto." })
+            .trim()
+            .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." })
+            .startsWith("https://www.instagram.com/", { message: "Usa un enlace de Instagram, de la forma: https://www.instagram.com/tu-usuario"}),
+    ]),
+    twitter: z.union([
+        z.literal(""),
+         z.string({ invalid_type_error: "Por favor, utiliza solo texto." })
+            .trim()
+            .max(2048, { message: "Este campo debe tener menos de 2049 caracteres." })
+            .startsWith("https://x.com/", { message: "Usa un enlace válido de X, de la forma: https://x.com/tu-usuario"}),
+    ]),
     contactEmail: z.union([
         z.literal(""),
         z.string({ invalid_type_error: "Por favor, utiliza solo texto." })
