@@ -1,24 +1,30 @@
 "use server";
-import { LoginResponse } from '@/lib/interfaces';
+import { StandarResponse } from '@/lib/interfaces';
+import { sameDay } from '@/lib/utils';
 import { db } from '@/prisma';
 import { newPostWhitIdAndPhoto } from '@/zod';
 import { z } from 'zod';
 
-export const createPost = async (values:z.infer<typeof newPostWhitIdAndPhoto>): Promise<LoginResponse> => {
+export const createPost = async (values:z.infer<typeof newPostWhitIdAndPhoto>): Promise<StandarResponse> => {
 
     const { publicName, problem, vision, aboutMe, lookingFor, offer, team, location, 
         projectPhase, linkedin, instagram, twitter, contactEmail, profilePhoto, userId } = values;
 
-    if (!problem && !vision && !aboutMe && !lookingFor && !offer && !team && !location && !projectPhase) 
-        return { status: "error", message: 'Debes completar al menos uno de los campos de la seccción "Sobre el proyecto".'}
-
-    const uniqueName = await db.post.findUnique({ 
+    // ultimo post publicado por el usuario
+    const post = await db.post.findFirst({ 
         where: {
-            publicName
+            publicName,
+            deleted: false
+        },
+        orderBy: {
+            createdAt: "desc"
         }
     });
 
-    if (uniqueName) return { status: "error", message: "Ya existe un usuario con ese nombre. Por favor, utiliza otro. " }
+    if (post && post.authorId === userId && sameDay(post.createdAt, new Date())) return { status: "error", message: "Solo puedes publicar un mensaje al día." }
+
+    if (!problem && !vision && !aboutMe && !lookingFor && !offer && !team && !location && !projectPhase) 
+        return { status: "error", message: 'Debes completar al menos uno de los campos de la seccción "Sobre el proyecto".'}
 
     if (!linkedin && !instagram && !twitter && !contactEmail) 
         return { status: "error", message: 'Debes añadir al menos una forma de contacto en la sección "Contacto".' }

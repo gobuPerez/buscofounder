@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "buscofounder",
-  description: "Forma tu equipo, conquista el mundo",
+  description: "La plataforma para emprendedores en busca de equipo",
 };
 
 export default function RootLayout({

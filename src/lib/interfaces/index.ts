@@ -1,4 +1,4 @@
-export interface LoginResponse {
+export interface StandarResponse {
     status: "error" | "success" | "empty";
     message: string;
 }
@@ -21,4 +21,10 @@ export interface Post {
     profilePhoto: string | null;
     createdAt: Date;
     authorId: string;
+}
+
+export interface PostResponse {
+    status:  "error" | "success" | "empty";
+    message?: string;
+    data?: Post[]
 }

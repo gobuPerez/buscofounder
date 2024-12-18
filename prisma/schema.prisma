@@ -44,7 +44,7 @@ model User {
 
 model Post {
   id            String @id @default(cuid())
-  publicName    String @db.VarChar(64) @unique
+  publicName    String @db.VarChar(64)
   problem       String? @db.VarChar(2048)
   vision        String? @db.VarChar(2048)
   aboutMe       String? @db.VarChar(2048)

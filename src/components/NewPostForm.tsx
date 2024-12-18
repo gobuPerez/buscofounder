@@ -27,7 +27,7 @@ import { Switch } from "@/components/ui/switch";
 import { createPost } from "@/actions/createPost";
 import { newPostSchema } from "@/zod";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { LoginResponse } from "@/lib/interfaces";
+import { StandarResponse } from "@/lib/interfaces";
   
 interface Props {
     setOpenForm:  Dispatch<SetStateAction<boolean>>;
@@ -38,7 +38,7 @@ interface Props {
 
 export default function NewPostForm({ setOpenForm, userName, userId, photoURL }:Props) {
 
-    const [response, setResponse] = useState<LoginResponse>({ status: "empty", message: "" });
+    const [response, setResponse] = useState<StandarResponse>({ status: "empty", message: "" });
 
     const [loading, setLoading] = useState<boolean>(false);
 
