@@ -9,7 +9,7 @@ import { elapsedTime } from "@/lib/utils";
   
 interface Props {
     logged: boolean;
-    post: PostSchema
+    post: PostSchema;
 }
 
 export default function Post({ logged, post }: Props) {

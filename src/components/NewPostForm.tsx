@@ -10,7 +10,7 @@ import {
 import { AlertCircle, CircleXIcon, Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { boolean, z } from "zod";
+import { z } from "zod";
 import {
     Form,
     FormControl,
@@ -27,16 +27,17 @@ import { Switch } from "@/components/ui/switch";
 import { createPost } from "@/actions/createPost";
 import { newPostSchema } from "@/zod";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { StandarResponse } from "@/lib/interfaces";
+import { Post as PostSchema, StandarResponse } from "@/lib/interfaces";
   
 interface Props {
-    setOpenForm:  Dispatch<SetStateAction<boolean>>;
     userId: string;
     userName: string;
     photoURL: string;
+    setPostArray: Dispatch<SetStateAction<PostSchema[]>>;
+    setOpenForm: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function NewPostForm({ setOpenForm, userName, userId, photoURL }:Props) {
+export default function NewPostForm({ userName, userId, photoURL, setPostArray, setOpenForm }:Props) {
 
     const [response, setResponse] = useState<StandarResponse>({ status: "empty", message: "" });
 
@@ -66,13 +67,18 @@ export default function NewPostForm({ setOpenForm, userName, userId, photoURL }:
         
         setLoading(true);
 
-        setResponse(await createPost({ 
+        const formResponse = await createPost({ 
             ...values, 
             userId, 
             profilePhoto: values.showProfilePhoto ? photoURL : null 
-        }));
+        });
 
         setLoading(false);
+
+        if (formResponse.status === "error") setResponse(formResponse);
+        else {
+            setOpenForm(false);
+        }
     }
 
     return (

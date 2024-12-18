@@ -1,14 +1,16 @@
 "use client";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Button } from "@/components/ui/button"
 import NewPostForm from "./NewPostForm";
+import { Post } from "@/lib/interfaces";
 
 interface Props {
     userId: string;
     userName: string;
     photoURL: string;
+    setPostArray: Dispatch<SetStateAction<Post[]>>;
 }
-export default function NewPostButton({ userId, userName, photoURL }:Props) {
+export default function NewPostButton({ userId, userName, photoURL, setPostArray }:Props) {
     
     const [openForm, setOpenForm] = useState<boolean>(false);
 
@@ -21,10 +23,11 @@ export default function NewPostButton({ userId, userName, photoURL }:Props) {
             </div>
             :
             <NewPostForm 
-                setOpenForm={setOpenForm} 
                 userId={userId} 
                 userName={userName} 
                 photoURL={photoURL} 
+                setPostArray={setPostArray}
+                setOpenForm={setOpenForm}
             />
         }
         </>

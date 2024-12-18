@@ -1,8 +1,10 @@
+"use client";
 import Post from "@/components/Post";
 import { PostResponse, Post as PostSchema } from "@/lib/interfaces";
 import { Button } from "@/components/ui/button";
 import NewPostButton from "@/components/NewPostButton";
 import Link from "next/link";
+import { useState } from "react";
 
 interface Props {
     logged: boolean;
@@ -13,6 +15,8 @@ interface Props {
 }
 
 export default function Posts({ logged, posts, userId, userName, photoURL }:Props) {
+
+    const [postArray, setPostArray] = useState<PostSchema[]>(posts.data ? posts.data : []);
 
     return (
         <>
@@ -30,13 +34,14 @@ export default function Posts({ logged, posts, userId, userName, photoURL }:Prop
                 userId={userId} 
                 userName={userName} 
                 photoURL={photoURL}
+                setPostArray={setPostArray}
             />
         }
                 
         {
             posts.status === "error" ?
             <h1>error</h1>
-            : posts.data?.map(post => (
+            : postArray.map(post => (
                 <Post
                     key={post.id}
                     logged={logged}

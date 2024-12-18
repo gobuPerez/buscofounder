@@ -3,16 +3,13 @@ import { getPosts } from "@/actions/getPosts";
 import { auth } from "@/auth";
 import CTASection from "@/components/CTASection";
 import Header from "@/components/Header";
-import NewPostButton from "@/components/NewPostButton";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+
 import { PostResponse } from "@/lib/interfaces";
 import Posts from "@/components/Posts";
   
 export default async function HomePage() {
 
     const session = await auth();
-
     const posts:PostResponse =  await getPosts();
 
     return (
