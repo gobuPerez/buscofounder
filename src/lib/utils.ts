@@ -21,7 +21,7 @@ export function elapsedTime (createdAt:Date):string {
   else if (hours !== null && hours > 0) return `Hace ${hours} ${hours === 1 ? " hora" : " horas"}`;
   else if (minutes !== null && minutes > 0) return `Hace ${minutes} ${minutes === 1 ? " minuto" : " minutos"}`;
   else if (seconds !== null && seconds > 0) return `Hace ${seconds} ${seconds === 1 ? " segundo" : " segundos"}`
-  else return 'justo ahora';
+  else return 'Justo ahora';
 }
 
 export function sameDay(firstDate:Date, secondDate:Date):boolean {

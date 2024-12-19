@@ -9,8 +9,9 @@ interface Props {
     userName: string;
     photoURL: string;
     setPostArray: Dispatch<SetStateAction<Post[]>>;
+    posts: Post[];
 }
-export default function NewPostButton({ userId, userName, photoURL, setPostArray }:Props) {
+export default function NewPostButton({ userId, userName, photoURL, setPostArray, posts }:Props) {
     
     const [openForm, setOpenForm] = useState<boolean>(false);
 
@@ -28,6 +29,7 @@ export default function NewPostButton({ userId, userName, photoURL, setPostArray
                 photoURL={photoURL} 
                 setPostArray={setPostArray}
                 setOpenForm={setOpenForm}
+                posts={posts}
             />
         }
         </>

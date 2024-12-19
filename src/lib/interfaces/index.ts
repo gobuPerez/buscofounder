@@ -28,3 +28,9 @@ export interface PostResponse {
     message?: string;
     data?: Post[]
 }
+
+export interface CreatedPost {
+    status:  "error" | "success" | "empty";
+    message: string;
+    data?: Post;
+}

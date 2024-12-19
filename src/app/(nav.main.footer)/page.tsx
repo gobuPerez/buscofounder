@@ -2,10 +2,18 @@ import { Suspense } from "react";
 import { getPosts } from "@/actions/getPosts";
 import { auth } from "@/auth";
 import CTASection from "@/components/CTASection";
-import Header from "@/components/Header";
 
 import { PostResponse } from "@/lib/interfaces";
 import Posts from "@/components/Posts";
+import { Loader2 } from "lucide-react";
+
+function Loader() {
+    return (
+        <div className="flex justify-center items-center my-10">
+            <Loader2 className="animate-spin text-blue-600" />
+        </div>
+    )
+}
   
 export default async function HomePage() {
 
@@ -13,10 +21,9 @@ export default async function HomePage() {
     const posts:PostResponse =  await getPosts();
 
     return (
-        <Suspense fallback={<h1>Cargando</h1>}>
-            <Header />
-            <main className="container">
-                <CTASection />
+        <main className="container">
+            <CTASection />
+            <Suspense fallback={<Loader />}>
                 <Posts 
                     logged={session ? true : false}
                     posts={posts} 
@@ -24,7 +31,7 @@ export default async function HomePage() {
                     userName={session?.user?.name ? session.user.name : "" } 
                     photoURL={session?.user?.image ? session.user.image : "" }
                 />
-            </main>
-        </Suspense>
+            </Suspense>
+        </main>
     );
 }

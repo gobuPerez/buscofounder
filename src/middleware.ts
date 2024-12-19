@@ -2,7 +2,9 @@ import NextAuth from "next-auth";
 import authConfig from "@/auth.config";
 
 export const publicRoutes:string[]  = [
-    "/"
+    "/",
+    "/privacidad",
+    "/terminos"
 ];
 
 export const authRoutes:string[] = [

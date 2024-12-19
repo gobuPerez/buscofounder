@@ -11,11 +11,11 @@ export default function CTASection() {
                     <p className="mx-auto mt-1 max-w-xl text-pretty text-gray-600 px-4">
                         Publica tu proyecto y conecta con emprendedores que compartan tu visión. Encuentra una idea que te inspire y forma parte de ella.
                     </p>
-                    <div className="mt-2 flex items-center justify-center gap-x-3">
+                    {/* <div className="mt-2 flex items-center justify-center gap-x-3">
                         <Link href="#" className="text-sm/6 font-semibold text-gray-900 hover:underline">
                             Conocer más <span aria-hidden="true">→</span>
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

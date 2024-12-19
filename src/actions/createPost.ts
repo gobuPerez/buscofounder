@@ -1,11 +1,11 @@
 "use server";
-import { StandarResponse } from '@/lib/interfaces';
+import { CreatedPost, Post, StandarResponse } from '@/lib/interfaces';
 import { sameDay } from '@/lib/utils';
 import { db } from '@/prisma';
 import { newPostWhitIdAndPhoto } from '@/zod';
 import { z } from 'zod';
 
-export const createPost = async (values:z.infer<typeof newPostWhitIdAndPhoto>): Promise<StandarResponse> => {
+export const createPost = async (values:z.infer<typeof newPostWhitIdAndPhoto>): Promise<CreatedPost> => {
 
     const { publicName, problem, vision, aboutMe, lookingFor, offer, team, location, 
         projectPhase, linkedin, instagram, twitter, contactEmail, profilePhoto, userId } = values;
@@ -21,7 +21,9 @@ export const createPost = async (values:z.infer<typeof newPostWhitIdAndPhoto>): 
         }
     });
 
-    if (post && post.authorId === userId && sameDay(post.createdAt, new Date())) return { status: "error", message: "Solo puedes publicar un mensaje al día." }
+    if (process.env.NODE_ENV === "production")
+        if (post && post.authorId === userId && sameDay(post.createdAt, new Date())) 
+            return { status: "error", message: "Solo puedes publicar un mensaje al día." }
 
     if (!problem && !vision && !aboutMe && !lookingFor && !offer && !team && !location && !projectPhase) 
         return { status: "error", message: 'Debes completar al menos uno de los campos de la seccción "Sobre el proyecto".'}
@@ -29,7 +31,7 @@ export const createPost = async (values:z.infer<typeof newPostWhitIdAndPhoto>): 
     if (!linkedin && !instagram && !twitter && !contactEmail) 
         return { status: "error", message: 'Debes añadir al menos una forma de contacto en la sección "Contacto".' }
 
-    await db.post.create({
+    const newPost = await db.post.create({
         data: {           
             publicName,   
             problem: !problem ? null : problem,       
@@ -51,5 +53,5 @@ export const createPost = async (values:z.infer<typeof newPostWhitIdAndPhoto>): 
         }
     });
 
-    return { status: "success", message: "Mensaje publicado correctamente." };
+    return { status: "success", message: "Mensaje publicado correctamente.", data: newPost };
 }

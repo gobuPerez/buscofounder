@@ -5,10 +5,10 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
-import LogoutButton from "@/app/login/LogoutButton";
+} from "@/components/ui/dropdown-menu"
+import LogoutButton from "@/components/LogoutButton";
+import Logo from "@/components/Logo";
   
 
 export default async function Header() {
@@ -18,8 +18,8 @@ export default async function Header() {
     return (
         <header className="border-b mb-5 py-3 bg-white">
             <div className="container flex justify-between items-center">
-                <Link className="text-2xl" href="/">
-                    <span className="font-bold text-blue-400">bus</span><span className="font-bold text-blue-600">cofounder</span>
+                <Link href="/">
+                    <Logo styles="text-2xl"/>
                 </Link>
                 {
                     !session ?
@@ -36,13 +36,13 @@ export default async function Header() {
                         />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="mr-4 sm:mr-0">
-                            <DropdownMenuItem>Mis publicaciones</DropdownMenuItem>
-                            <DropdownMenuItem>Sugerencias</DropdownMenuItem>
+                            {/* <DropdownMenuItem>Mis publicaciones</DropdownMenuItem>
+                            <DropdownMenuItem>Sugerencias</DropdownMenuItem> */}
                             <DropdownMenuItem>
                                 <LogoutButton />    
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Eliminar cuenta</DropdownMenuItem>
+                          {/*   <DropdownMenuSeparator />
+                            <DropdownMenuItem>Eliminar cuenta</DropdownMenuItem> */}
                         </DropdownMenuContent>
                     </DropdownMenu>
 

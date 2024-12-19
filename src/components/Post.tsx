@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { EllipsisVertical, Mail } from "lucide-react";
+import { Mail, Trash } from "lucide-react";
 import Link from "next/link";
 import { Post as PostSchema } from "@/lib/interfaces";
 import PostSection from "@/components/PostSection";
@@ -10,28 +10,26 @@ import { elapsedTime } from "@/lib/utils";
 interface Props {
     logged: boolean;
     post: PostSchema;
+    userId: string;
 }
 
-export default function Post({ logged, post }: Props) {
+export default function Post({ logged, post, userId }: Props) {
 
     const [showContactInfo, setShowContactInfo] = useState<boolean>(false);
 
     return (
         <section className="border rounded-md p-4 bg-white mb-5 shadow-md space-y-4">
 
-            <div className="flex flex-row justify-start itesm-center space-x-5 mb-5">
+            <div className="flex flex-row justify-start items-center space-x-5 mb-5">
                 <img
                     alt=""
                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                     className="inline-block size-12 rounded-full"
                 />
                 
-                <div className="flex justify-between items-center w-full">
-                    <div className="flex flex-col">
-                        <p className="font-bold">{post.publicName}</p>
-                        <p>{elapsedTime(post.createdAt)}</p>
-                    </div>
-                    <EllipsisVertical className="text-gray-400 hover:cursor-pointer" />
+                <div className="flex flex-col">
+                    <p className="font-bold">{post.publicName}</p>
+                    <p>{elapsedTime(post.createdAt)}</p>
                 </div>
             </div>
             
@@ -209,6 +207,17 @@ export default function Post({ logged, post }: Props) {
                     <Link href="/login">
                         Mostrar información de contacto
                     </Link>
+                </Button>
+            }
+
+            {
+                (logged && userId === post.authorId) &&
+                <Button 
+                    variant="destructive"
+                    className="w-full" 
+                    onClick={ () => setShowContactInfo(true) }
+                >
+                    <Trash /> Eliminar
                 </Button>
             }
 

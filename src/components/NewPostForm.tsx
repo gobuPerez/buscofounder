@@ -27,17 +27,21 @@ import { Switch } from "@/components/ui/switch";
 import { createPost } from "@/actions/createPost";
 import { newPostSchema } from "@/zod";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Post as PostSchema, StandarResponse } from "@/lib/interfaces";
+import { CreatedPost, Post, StandarResponse } from "@/lib/interfaces";
+import { useToast } from "@/hooks/use-toast";
   
 interface Props {
     userId: string;
     userName: string;
     photoURL: string;
-    setPostArray: Dispatch<SetStateAction<PostSchema[]>>;
+    setPostArray: Dispatch<SetStateAction<Post[]>>;
     setOpenForm: Dispatch<SetStateAction<boolean>>;
+    posts: Post[];
 }
 
-export default function NewPostForm({ userName, userId, photoURL, setPostArray, setOpenForm }:Props) {
+export default function NewPostForm({ userName, userId, photoURL, setPostArray, setOpenForm, posts }:Props) {
+
+    const { toast } = useToast();
 
     const [response, setResponse] = useState<StandarResponse>({ status: "empty", message: "" });
 
@@ -67,7 +71,7 @@ export default function NewPostForm({ userName, userId, photoURL, setPostArray, 
         
         setLoading(true);
 
-        const formResponse = await createPost({ 
+        const formResponse: CreatedPost = await createPost({ 
             ...values, 
             userId, 
             profilePhoto: values.showProfilePhoto ? photoURL : null 
@@ -77,7 +81,14 @@ export default function NewPostForm({ userName, userId, photoURL, setPostArray, 
 
         if (formResponse.status === "error") setResponse(formResponse);
         else {
-            setOpenForm(false);
+            if(formResponse.data) {
+                setPostArray([formResponse?.data, ...posts]);
+                toast({
+                    title: "Mensaje publicado correctamente.",
+                    description: "Esperamos que este sea el comienzo de una gran aventura.",
+                });
+                setOpenForm(false);
+            }
         }
     }
 

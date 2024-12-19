@@ -25,7 +25,7 @@ export default function Posts({ logged, posts, userId, userName, photoURL }:Prop
             <div className="flex justify-end items-center mb-3">
                 <Button asChild>
                     <Link href="/login">
-                        Publicar mensaje
+                        Nuevo mensaje
                     </Link>
                 </Button>
             </div>
@@ -35,6 +35,7 @@ export default function Posts({ logged, posts, userId, userName, photoURL }:Prop
                 userName={userName} 
                 photoURL={photoURL}
                 setPostArray={setPostArray}
+                posts={posts.data ? posts.data : []}
             />
         }
                 
@@ -44,6 +45,7 @@ export default function Posts({ logged, posts, userId, userName, photoURL }:Prop
             : postArray.map(post => (
                 <Post
                     key={post.id}
+                    userId={userId}
                     logged={logged}
                     post={post}
                 />
