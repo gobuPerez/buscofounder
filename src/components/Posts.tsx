@@ -48,6 +48,8 @@ export default function Posts({ logged, posts, userId, userName, photoURL }:Prop
                     userId={userId}
                     logged={logged}
                     post={post}
+                    postArray={postArray}
+                    setPostArray={setPostArray}
                 />
             ))
         }

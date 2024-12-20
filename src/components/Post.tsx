@@ -1,21 +1,35 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Mail, Trash } from "lucide-react";
 import Link from "next/link";
 import { Post as PostSchema } from "@/lib/interfaces";
 import PostSection from "@/components/PostSection";
-import { elapsedTime } from "@/lib/utils";
+import { elapsedTime } from "@/lib/utils"; 
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import DeletePostButton from "./DeletePostButton";
   
 interface Props {
     logged: boolean;
     post: PostSchema;
     userId: string;
+    postArray: PostSchema[]
+    setPostArray: Dispatch<SetStateAction<PostSchema[]>>
 }
 
-export default function Post({ logged, post, userId }: Props) {
+export default function Post({ logged, post, userId, postArray, setPostArray }: Props) {
 
     const [showContactInfo, setShowContactInfo] = useState<boolean>(false);
+
+    const [openDialog, setOpenDialog] = useState(false);
 
     return (
         <section className="border rounded-md p-4 bg-white mb-5 shadow-md space-y-4">
@@ -143,7 +157,7 @@ export default function Post({ logged, post, userId }: Props) {
 
 
             {
-                (logged && showContactInfo) &&
+                ((logged && userId === post.authorId) || (logged && showContactInfo)) &&
                 <>
 
                     <PostSection
@@ -200,9 +214,9 @@ export default function Post({ logged, post, userId }: Props) {
             }
 
             {
-                (logged && !showContactInfo) ?
+                ((logged && !showContactInfo) && (logged && userId !== post.authorId)) ?
                 <Button className="w-full" onClick={ () => setShowContactInfo(true) }>Mostrar información de contacto</Button>
-                : !logged &&
+                : (!logged || (logged && userId !== post.authorId)) &&
                 <Button asChild className="w-full">
                     <Link href="/login">
                         Mostrar información de contacto
@@ -212,13 +226,34 @@ export default function Post({ logged, post, userId }: Props) {
 
             {
                 (logged && userId === post.authorId) &&
-                <Button 
-                    variant="destructive"
-                    className="w-full" 
-                    onClick={ () => setShowContactInfo(true) }
-                >
-                    <Trash /> Eliminar
-                </Button>
+                    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+                        <DialogTrigger asChild>
+                            <Button variant="destructive" className="w-full"> 
+                                <Trash />Eliminar mensaje
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md">
+                            <DialogHeader>
+                                <DialogTitle>Eliminar mensaje</DialogTitle>
+                                <DialogDescription>
+                                    ¿Estás seguro de que quieres eliminar el mensaje?
+                                </DialogDescription>
+                            </DialogHeader>
+                            <DeletePostButton 
+                                userId={userId} 
+                                authorId={post.authorId}
+                                postId={post.id}
+                                setOpenDialog={setOpenDialog}
+                                postArray={postArray}
+                                setPostArray={setPostArray}
+                            />
+                            <DialogClose asChild>
+                                <Button type="button" variant="secondary">
+                                    Cancelar
+                                </Button>
+                            </DialogClose>
+                        </DialogContent>
+                    </Dialog>
             }
 
         </section>
