@@ -12,8 +12,8 @@ export function elapsedTime (createdAt:Date):string {
   const minutes:number = new Date().getMinutes() - createdAt.getMinutes();
   const seconds:number = new Date().getSeconds() - createdAt.getSeconds();
   
-  let differenceInYears = Math.floor(days / 365);
-  let differenceInMonths = Math.floor(days / 30);
+  const differenceInYears = Math.floor(days / 365);
+  const differenceInMonths = Math.floor(days / 30);
 
   if (differenceInYears > 0) return `Hace ${differenceInYears} ${differenceInYears === 1 ? " año" : " años"}`;
   else if (differenceInMonths > 0) return `Hace ${differenceInMonths} ${differenceInMonths === 1 ? " mes" : " meses"}`;

@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function CTASection() {
     return (
         <div className="bg-white rounded-md shadow-md">

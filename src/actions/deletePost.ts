@@ -18,6 +18,7 @@ export const deletePost = async (userId:string, postCreatedBy:string, postId:str
     
         return { status: "success", message: "Mensaje eliminado correctamente." }
     } catch (error) {
+        if (process.env.NODE_ENV === "development") console.log(error);
         return { status: "error", message: MESSAGE_500 }
     }
 }

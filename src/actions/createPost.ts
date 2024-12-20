@@ -1,6 +1,6 @@
 "use server";
 import { MESSAGE_500 } from '@/lib/constants';
-import { CreatedPost, Post, StandarResponse } from '@/lib/interfaces';
+import { CreatedPost } from '@/lib/interfaces';
 import { sameDay } from '@/lib/utils';
 import { db } from '@/prisma';
 import { newPostWhitIdAndPhoto } from '@/zod';
@@ -56,6 +56,7 @@ export const createPost = async (values:z.infer<typeof newPostWhitIdAndPhoto>): 
     
         return { status: "success", message: "Mensaje publicado correctamente.", data: newPost };
     } catch (error) {
+        if (process.env.NODE_ENV === "development") console.log(error);
         return { status: "error", message: MESSAGE_500 }
     }
 }

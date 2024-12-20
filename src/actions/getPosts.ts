@@ -38,6 +38,7 @@ export const getPosts = async ():Promise<PostResponse> => {
         return { status: "success", data: posts };
         
     } catch (error) {
+        if (process.env.NODE_ENV === "development") console.log(error);
         return { status: "error", message: MESSAGE_500 }
     }
 }
