@@ -90,7 +90,7 @@ export default function ServiceTerms() {
             </p>
 
             <h2 className="font-bold">13. Contacto</h2>
-            <p>Si tiene alguna pregunta sobre estos Términos de Servicio, no dude en ponerse en contacto con nosotros a través de: diego@buscofounder.com</p>
+            <p>Si tiene alguna pregunta sobre estos Términos de Servicio, no dude en ponerse en contacto con nosotros a través de: gobuperez@gmail.com</p>
         </div>
     );
 }

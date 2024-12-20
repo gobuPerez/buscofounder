@@ -59,7 +59,7 @@ export default function PrivacyPage() {
             <h2 className="font-bold text-center">7. Contacto</h2>
             <p>Si tiene preguntas sobre esta Política de Privacidad o sobre el tratamiento de su información personal, no dude en ponerse en contacto con nosotros a través de:</p>
             <ul className="ml-5 font-bold text-center">
-                <li>Email: diego@buscofounder.com</li>
+                <li>Email: gobuperez@gmail.com</li>
             </ul>
         </div>
     );
