@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import NewPostButton from "@/components/NewPostButton";
 import Link from "next/link";
 import { useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { AlertCircle } from "lucide-react";
 
 interface Props {
     logged: boolean;
@@ -41,7 +43,13 @@ export default function Posts({ logged, posts, userId, userName, photoURL }:Prop
                 
         {
             posts.status === "error" ?
-            <h1>error</h1>
+            <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>
+                    { posts.message }
+                </AlertDescription>
+            </Alert>
             : postArray.map(post => (
                 <Post
                     key={post.id}
