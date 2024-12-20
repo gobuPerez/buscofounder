@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Mail, Trash } from "lucide-react";
+import { Mail, Trash, User } from "lucide-react";
 import Link from "next/link";
 import { Post as PostSchema } from "@/lib/interfaces";
 import PostSection from "@/components/PostSection";
@@ -35,11 +35,18 @@ export default function Post({ logged, post, userId, postArray, setPostArray }: 
         <section className="border rounded-md p-4 bg-white mb-5 shadow-md space-y-4">
 
             <div className="flex flex-row justify-start items-center space-x-5 mb-5">
-                <img
-                    alt=""
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    className="inline-block size-12 rounded-full"
-                />
+                {
+                    !post.profilePhoto ?
+                    <div className="border rounded-full p-3">
+                        <User />
+                    </div>
+                    :
+                    <img
+                        alt=""
+                        src={post.profilePhoto || ""}
+                        className="inline-block size-12 rounded-full"
+                    />
+                }
                 
                 <div className="flex flex-col">
                     <p className="font-bold">{post.publicName}</p>

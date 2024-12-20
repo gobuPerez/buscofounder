@@ -11,7 +11,6 @@ export default function Footer() {
                     <Link href="/privacidad" className="underline">Política de Privacidad</Link>
                 </div>
                 <span className="flex items-center justify-center">
-                    <MailIcon size={15} className="inline mr-1"/>diego@buscofounder.com
                 </span>
             </div>
         </footer>
