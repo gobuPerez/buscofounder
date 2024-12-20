@@ -221,14 +221,14 @@ export default function Post({ logged, post, userId, postArray, setPostArray }: 
             }
 
             {
-                ((logged && !showContactInfo) && (logged && userId !== post.authorId)) ?
-                <Button className="w-full" onClick={ () => setShowContactInfo(true) }>Mostrar información de contacto</Button>
-                : (!logged || (logged && userId !== post.authorId)) &&
+                !logged ?
                 <Button asChild className="w-full">
                     <Link href="/login">
                         Mostrar información de contacto
                     </Link>
                 </Button>
+                : logged && userId !== post.authorId && !showContactInfo &&
+                <Button className="w-full" onClick={ () => setShowContactInfo(true) }>Mostrar información de contacto</Button>
             }
 
             {
