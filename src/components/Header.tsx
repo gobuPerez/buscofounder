@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import LogoutButton from "@/components/LogoutButton";
 import Logo from "@/components/Logo";
+import { SquareArrowOutUpRight } from "lucide-react";
 
 export default async function Header() {
 
@@ -37,6 +38,15 @@ export default async function Header() {
                         <DropdownMenuContent className="mr-4 sm:mr-0">
                             {/* <DropdownMenuItem>Mis publicaciones</DropdownMenuItem>
                             <DropdownMenuItem>Sugerencias</DropdownMenuItem> */}
+                            <DropdownMenuItem>
+                                <a 
+                                    href="https://dashboard.simpleanalytics.com/buscofounder.com"
+                                    target="__blank"
+                                    className="flex justify-start items-center"
+                                >
+                                    Métricas <SquareArrowOutUpRight className="inline size-4 ml-1"/>   
+                                </a> 
+                            </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <LogoutButton />    
                             </DropdownMenuItem>
