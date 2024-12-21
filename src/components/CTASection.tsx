@@ -1,7 +1,7 @@
 export default function CTASection() {
     return (
         <div className="bg-white rounded-md shadow-md">
-            <div className="py-4 mt-5 mb-3">
+            <div className="py-4 mt-5 mb-3 px-2">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="text-balance text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">
                         La plataforma para <span className="text-blue-600">emprendedores</span> en busca de <span className="text-blue-400">equipo</span>
