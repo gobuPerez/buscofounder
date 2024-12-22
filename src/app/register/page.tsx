@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 export default function RegisterPage() {
     return (
         <div className="h-full flex flex-col space-y-3 justify-center items-center">
-            <Card className="max-w-[400px]">
+            <Card className="max-w-[300px]">
                 <CardHeader>
                     <CardTitle className="text-center">
                         <Link href="/">
