@@ -32,7 +32,7 @@ export default function Post({ logged, post, userId, postArray, setPostArray }: 
     const [openDialog, setOpenDialog] = useState(false);
 
     return (
-        <section className="border rounded-md p-4 bg-white mb-5 shadow-md space-y-4">
+        <section className="border rounded-md p-4 bg-white mb-5 shadow-md space-y-2">
 
             <div className="flex flex-row justify-start items-center space-x-5 mb-5">
                 {
