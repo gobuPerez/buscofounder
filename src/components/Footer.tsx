@@ -1,4 +1,4 @@
-import { MailIcon } from "lucide-react";
+import { MailIcon, SquareArrowOutUpRight } from "lucide-react";
 import Link from "next/link";
 
 export default function Footer() {
@@ -10,8 +10,15 @@ export default function Footer() {
                     <Link href="/terminos" className="underline">Términos del Servicio</Link>
                     <Link href="/privacidad" className="underline">Política de Privacidad</Link>
                 </div>
-                <span className="flex items-center justify-center">
-                </span>
+                <div className="flex items-center justify-center">
+                    <a 
+                        href="https://dashboard.simpleanalytics.com/buscofounder.com"
+                        target="__blank"
+                        className="flex justify-start items-center"
+                    >
+                        Métricas <SquareArrowOutUpRight className="inline size-4 ml-1"/>   
+                    </a> 
+                </div>
             </div>
         </footer>
     );
