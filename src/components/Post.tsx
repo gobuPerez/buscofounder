@@ -5,7 +5,6 @@ import { Mail, Trash, User } from "lucide-react";
 import Link from "next/link";
 import { Post as PostSchema } from "@/lib/interfaces";
 import PostSection from "@/components/PostSection";
-import { elapsedTime } from "@/lib/utils"; 
 import {
   Dialog,
   DialogClose,
@@ -16,6 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import DeletePostButton from "./DeletePostButton";
+import { calculateDifference, differenceToString } from "@/lib/utils";
   
 interface Props {
     logged: boolean;
@@ -33,7 +33,6 @@ export default function Post({ logged, post, userId, postArray, setPostArray }: 
 
     return (
         <section className="border rounded-md p-4 bg-white mb-5 shadow-md space-y-2">
-
             <div className="flex flex-row justify-start items-center space-x-5 mb-5">
                 {
                     !post.profilePhoto ?
@@ -50,7 +49,7 @@ export default function Post({ logged, post, userId, postArray, setPostArray }: 
                 
                 <div className="flex flex-col">
                     <p className="font-bold">{post.publicName}</p>
-                    <p>{elapsedTime(post.createdAt)}</p>
+                    <p>{ differenceToString(calculateDifference(post.createdAt)) }</p>
                 </div>
             </div>
             
@@ -262,7 +261,6 @@ export default function Post({ logged, post, userId, postArray, setPostArray }: 
                         </DialogContent>
                     </Dialog>
             }
-
         </section>
     );
 }
