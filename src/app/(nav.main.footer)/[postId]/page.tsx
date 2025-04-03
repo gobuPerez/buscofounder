@@ -1,20 +1,24 @@
 import { Suspense } from "react";
-import { getPosts } from "@/actions/getPosts";
 import { auth } from "@/auth";
-import CTASection from "@/components/CTASection";
 
 import Posts from "@/components/Posts";
 import { PostsResponse } from "@/lib/interfaces";
 import Loader from "@/components/Loader";
+import { getPost } from "@/actions/getPost";
+
+interface Props {
+    params: Promise<{ postId: string }>
+}
   
-export default async function HomePage() {
+export default async function PostPage({ params }:Props) {
+
+    const { postId } = await params
 
     const session = await auth();
-    const posts:PostsResponse =  await getPosts();
+    const posts:PostsResponse =  await getPost(postId);
 
     return (
         <main className="container">
-            <CTASection />
             <Suspense fallback={<Loader />}>
                 <Posts 
                     logged={session ? true : false}
@@ -22,6 +26,7 @@ export default async function HomePage() {
                     userId={session?.user?.id ? session.user.id : "" } 
                     userName={session?.user?.name ? session.user.name : "" } 
                     photoURL={session?.user?.image ? session.user.image : "" }
+                    onlyOnePost
                 />
             </Suspense>
         </main>

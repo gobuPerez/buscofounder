@@ -23,7 +23,7 @@ export interface Post {
     authorId: string;
 }
 
-export interface PostResponse {
+export interface PostsResponse {
     status:  "error" | "success" | "empty";
     message?: string;
     data?: Post[]

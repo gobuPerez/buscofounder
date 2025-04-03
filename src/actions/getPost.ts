@@ -3,10 +3,10 @@ import { MESSAGE_500 } from '@/lib/constants';
 import { Post, PostsResponse } from '@/lib/interfaces';
 import { db } from '@/prisma';
 
-export const getPosts = async ():Promise<PostsResponse> => {
+export const getPost = async (id:string):Promise<PostsResponse> => {
 
     try {
-        const posts:Post[] = await db.post.findMany({
+        const post:Post | null = await db.post.findUnique({
             select: {
                 id: true,
                 publicName: true,
@@ -28,14 +28,12 @@ export const getPosts = async ():Promise<PostsResponse> => {
                 authorId: true,
             },
             where: {
-                deleted: false
-            },
-            orderBy: {
-                createdAt: "desc"
+                deleted: false,
+                id
             }
         });
-        
-        return { status: "success", data: posts };
+        // Si no existe la publicacion que se esta buscando se envia un vector vacio
+        return { status: "success", data: !post ? [] : [post] };
         
     } catch (error) {
         if (process.env.NODE_ENV === "development") console.log(error);

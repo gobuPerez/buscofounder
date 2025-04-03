@@ -1,1 +1,1 @@
-export const MESSAGE_500 = "Se ha producido un error al conectar con la aplicación. Por favor, vuelve a intentarlo en unos instantes. Si el error persiste, envía un email a diego@buscofounder.com"
+export const MESSAGE_500 = "Se ha producido un error al conectar con la aplicación. Por favor, recarga la página. Si el error persiste, envía un email a gobuperez@gmail.com"
