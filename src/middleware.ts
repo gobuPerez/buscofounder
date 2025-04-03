@@ -1,12 +1,6 @@
 import NextAuth from "next-auth";
 import authConfig from "@/auth.config";
 
-export const publicRoutes:string[]  = [
-    "/",
-    "/privacidad",
-    "/terminos"
-];
-
 export const authRoutes:string[] = [
     "/login",
     "/register"
@@ -21,17 +15,15 @@ export default auth((req) => {
     const isLoggedIn = !!req.auth;
 
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-    const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
     const isAuthRoute = authRoutes.includes(nextUrl.pathname);
     // las rutas que empiezan por /api/auth siempre permiten el paso
     if (isApiAuthRoute) return; 
-    // si se quiere acceder a una ruta de autenticacion (login o registro)  se comprueba si el usuario esta ya autenticado o no
+    // si se quiere acceder a una ruta de autenticacion (login o registro) se comprueba si el usuario esta ya autenticado o no
     if (isAuthRoute) {
         if (isLoggedIn) return Response.redirect(new URL("/", nextUrl));
         return;
     }
-    // si la ruta es privada y el usuario no esta logueado, se le envia a la pagina de login
-    if (!isLoggedIn && !isPublicRoute) return Response.redirect(new URL("/auth/login", nextUrl));
+    return;
 });
 
 // Middleware copiado de https://clerk.com/docs/references/nextjs/clerk-middleware#usage

@@ -14,7 +14,7 @@ interface Props {
     userId: string;
     userName: string;
     photoURL: string;
-    onlyOnePost?: boolean
+    onlyOnePost?: boolean;
 }
 
 export default function Posts({ logged, posts, userId, userName, photoURL, onlyOnePost = false }:Props) {

@@ -26,7 +26,7 @@ export default async function PostPage({ params }:Props) {
                     userId={session?.user?.id ? session.user.id : "" } 
                     userName={session?.user?.name ? session.user.name : "" } 
                     photoURL={session?.user?.image ? session.user.image : "" }
-                    onlyOnePost
+                    onlyOnePost={true}
                 />
             </Suspense>
         </main>
