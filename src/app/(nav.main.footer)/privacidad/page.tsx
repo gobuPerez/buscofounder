@@ -9,7 +9,7 @@ export default function PrivacyPage() {
     return (
         <div className="container space-y-4 mb-5">
             <h1 className="text-xl text-center font-bold">Política de Privacidad</h1>
-            <p><strong>Última actualización:</strong> 19-12-2024</p>
+            <p><strong>Última actualización:</strong> 13-05-2025</p>
 
             <p>
                 Esta Política de Privacidad explica cómo recopilamos, utilizamos y protegemos su información personal cuando utiliza nuestro sitio web, 

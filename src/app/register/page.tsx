@@ -12,6 +12,7 @@ import { signIn } from "@/auth";
 import { FcGoogle } from "react-icons/fc";
 import { Separator } from "@/components/ui/separator";
 import { Metadata } from "next";
+import { SearchCheckIcon } from "lucide-react";
 
 export const metadata: Metadata = {
     title: "buscofounder | Registro",
@@ -23,6 +24,7 @@ export default function RegisterPage() {
         <div className="h-full flex flex-col space-y-3 justify-center items-center">
             <Card className="max-w-[300px]">
                 <CardHeader>
+                    <SearchCheckIcon className="mx-auto text-blue-600" size={35}/>
                     <CardTitle className="text-center">
                         <Link href="/">
                             <Logo styles="text-2xl"/>

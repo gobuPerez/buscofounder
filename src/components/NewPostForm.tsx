@@ -84,7 +84,7 @@ export default function NewPostForm({ userName, userId, photoURL, setPostArray, 
             if(formResponse.data) {
                 setPostArray([formResponse?.data, ...posts]);
                 toast({
-                    title: "Mensaje publicado correctamente.",
+                    title: "Mensaje publicado correctamente!",
                     description: "Tu mensaje ya es visible para todos los usuarios que visiten la plataforma.",
                 });
                 setOpenForm(false);

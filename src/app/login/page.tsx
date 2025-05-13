@@ -11,6 +11,7 @@ import {
 import { signIn } from "@/auth";
 import { FcGoogle } from "react-icons/fc";
 import { Metadata } from "next";
+import { SearchCheckIcon } from "lucide-react";
 
 export const metadata: Metadata = {
     title: "buscofounder | Inicio de sesión",
@@ -22,6 +23,7 @@ export default function LoginPage() {
         <div className="h-full flex flex-col space-y-3 justify-center items-center">
             <Card className="max-w-[400px]">
                 <CardHeader>
+                    <SearchCheckIcon className="mx-auto text-blue-600" size={35}/>
                     <CardTitle className="text-center">
                         <Link href="/">
                             <Logo styles="text-2xl"/>
@@ -33,7 +35,7 @@ export default function LoginPage() {
                     <form
                         action={async () => {
                             "use server"
-                            await signIn("google", { redirectTo: "/" })
+                            await signIn("google", { redirectTo: "/publicaciones" })
                         }}
                     >
                         <Button variant="outline" type="submit" className="w-full"><FcGoogle /> Iniciar sesión con Google</Button>

@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { getPosts } from "@/actions/getPosts";
 import { auth } from "@/auth";
-import CTASection from "@/components/CTASection";
 
 import Posts from "@/components/Posts";
 import { PostsResponse } from "@/lib/interfaces";
@@ -14,7 +13,6 @@ export default async function HomePage() {
 
     return (
         <main className="container">
-            <CTASection />
             <Suspense fallback={<Loader />}>
                 <Posts 
                     logged={session ? true : false}
@@ -24,6 +22,6 @@ export default async function HomePage() {
                     photoURL={session?.user?.image ? session.user.image : "" }
                 />
             </Suspense>
-        </main>
+        </main> 
     );
 }

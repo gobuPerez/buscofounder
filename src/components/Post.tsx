@@ -165,7 +165,7 @@ export default function Post({ logged, post, userId, postArray, setPostArray }: 
                 variant="outline" 
                 className="w-full" 
                 onClick={() => {
-                    navigator.clipboard.writeText(window.location.toString() + post.id.toString());
+                    navigator.clipboard.writeText(window.location.toString() + "/" + post.id.toString());
                     toast({
                       title: "¡Enlace copiado! :)",
                       description: "Comparte la publicación para que llegue a más gente.",

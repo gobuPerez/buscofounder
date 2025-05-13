@@ -10,7 +10,7 @@ export default function ServiceTerms() {
     return (
         <div className="container space-y-4 mb-5">
             <h1 className="text-xl text-center font-bold">Términos del Servicio</h1>
-            <p><strong>Última actualización:</strong> 19-12-2024</p>
+            <p><strong>Última actualización:</strong> 13-05-2025</p>
 
             <p>
                 Bienvenido a buscofounder.com, un espacio donde los usuarios pueden publicar mensajes en línea. Al acceder o utilizar este sitio web, usted acepta cumplir

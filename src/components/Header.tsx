@@ -17,14 +17,14 @@ export default async function Header() {
 
     return (
         <header className="border-b mb-5 py-3 bg-white">
-            <div className="container flex justify-between items-center">
+            <div className="flex flex-row justify-between items-center px-5 sm:px-24 max-w-[2000px] mx-auto">
                 <Link href="/">
-                    <Logo styles="text-2xl"/>
+                    <Logo styles="text-3xl"/>
                 </Link>
                 {
                     !session ?
                     <Button asChild>
-                        <Link href="/login">Acceder</Link>
+                        <Link href="/login">Iniciar sesión</Link>
                     </Button>
                     :
                     <DropdownMenu>
