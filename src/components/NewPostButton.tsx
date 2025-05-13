@@ -19,7 +19,8 @@ export default function NewPostButton({ userId, userName, photoURL, setPostArray
         <>
         {
             !openForm ?
-            <div className="flex justify-end items-center mb-3">
+            <div className="flex justify-between items-end mb-3">
+                <h3 className="text-2xl font-bold text-blue-600">Publicaciones</h3>
                 <Button onClick={ () => setOpenForm(true) }>Nuevo mensaje</Button>
             </div>
             :

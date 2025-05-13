@@ -36,7 +36,7 @@ export default function RegisterPage() {
                     <form
                         action={async () => {
                             "use server"
-                            await signIn("google", { redirectTo: "/" })
+                            await signIn("google", { redirectTo: "/publicaciones" })
                         }}
                     >
                         <Button variant="outline" type="submit" className="w-full"><FcGoogle /> Regístrate con Google</Button>

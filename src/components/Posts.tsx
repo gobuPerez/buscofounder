@@ -35,7 +35,8 @@ export default function Posts({ logged, posts, userId, userName, photoURL, onlyO
             <>
             {
                 !logged ?
-                <div className="flex justify-end items-center mb-3">
+                <div className="flex justify-between items-end mb-3">
+                    <h3 className="text-2xl font-bold text-blue-600">Publicaciones</h3>
                     <Button asChild>
                         <Link href="/login">
                             Nuevo mensaje
